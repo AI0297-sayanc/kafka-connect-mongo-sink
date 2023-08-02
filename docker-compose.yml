@@ -6,6 +6,7 @@ services:
     ports:
       - "9092:9092"
       - "19092:19092"
+      - "29092:29092"
     environment:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,LOCALHOST://localhost:19092,LAN://192.168.0.201:29092
       KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,LOCALHOST://0.0.0.0:19092,LAN://0.0.0.0:29092
