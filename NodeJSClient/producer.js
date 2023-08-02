@@ -1,9 +1,10 @@
 const { Kafka } = require('kafkajs');
+const cuid = require("cuid")
 process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 
 const kafka = new Kafka({
   clientId: 'my-producer',
-  brokers: ['localhost:19092'], // Replace with your Kafka broker(s) information
+  brokers: ['192.168.0.201:29092'], // Replace with your Kafka broker(s) information
 });
 
 const producer = kafka.producer();
@@ -14,10 +15,41 @@ const main = async () => {
   const topic = process.argv[2] || 'my_topic'; // Replace with the topic you want to produce to
   // const message = process.argv[3]
   const message = {
-    field1: 'value1',
-    field2: 123,
-    field3: true,
+    "schema": {
+      "type": "struct",
+      "fields": [
+        {
+          "type": "string",
+          "optional": false,
+          "field": "id"
+        },
+        {
+          "type": "string",
+          "optional": false,
+          "field": "field1"
+        },
+        {
+          "type": "string",
+          "optional": false,
+          "field": "field2"
+        },
+        {
+          "type": "string",
+          "optional": false,
+          "field": "field3"
+        }
+
+      ]
+    },
+    "payload":
+    {
+      id: cuid(),
+      field1: 'abc',
+      field2: 'xyz',
+      field3: 'pqr'
+    }
   }
+
 
 
   try {
